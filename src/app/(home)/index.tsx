@@ -1,9 +1,14 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { drizzle } from "drizzle-orm/expo-sqlite";
 import { openDatabaseSync } from "expo-sqlite/next";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import migrations from "../../../drizzle/migrations";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
+import Header from "@/components/Header";
+
+import Constants from "expo-constants";
+
+const statusBarHeight = Constants.statusBarHeight;
 
 const DATABASE_NAME = "database.db";
 const expoDB = openDatabaseSync(DATABASE_NAME);
@@ -23,20 +28,14 @@ export default function Home() {
   }
 
   return (
-    <View style={style.container}>
-      <Text className="text-5xl font-extrabold">ruan guei</Text>
-    </View>
+    <ScrollView
+      style={{ flex: 1 }}
+      className="bg-slate-200"
+      showsVerticalScrollIndicator={false}
+    >
+      <View className="w-full px-5" style={{ marginTop: statusBarHeight + 8 }}>
+        <Header />
+      </View>
+    </ScrollView>
   );
 }
-
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "700",
-  },
-});

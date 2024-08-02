@@ -1,4 +1,4 @@
-import { router, Slot } from "expo-router";
+import { Slot } from "expo-router";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { useEffect } from "react";
 import { ActivityIndicator } from "react-native";
