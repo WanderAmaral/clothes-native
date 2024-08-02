@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <View style={style.container}>
-      <Text style={style.title}>ruan guei</Text>
+      <Text className="text-5xl font-extrabold">ruan guei</Text>
     </View>
   );
 }

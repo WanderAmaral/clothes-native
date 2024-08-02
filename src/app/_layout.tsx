@@ -3,6 +3,7 @@ import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import { tokenCache } from "./storage/tokencache";
+import "@/app/global.css";
 
 const PUBLIC_CLERK_PUBLISHABLE_KEY = process.env
   .EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
