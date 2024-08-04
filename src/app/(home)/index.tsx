@@ -1,21 +1,32 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, FlatList, Image } from "react-native";
 import { drizzle } from "drizzle-orm/expo-sqlite";
 import { openDatabaseSync } from "expo-sqlite/next";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import migrations from "../../../drizzle/migrations";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
-import Header from "@/components/Header";
-
-import Constants from "expo-constants";
-
-const statusBarHeight = Constants.statusBarHeight;
+import { useEffect, useState } from "react";
 
 const DATABASE_NAME = "database.db";
 const expoDB = openDatabaseSync(DATABASE_NAME);
 const db = drizzle(expoDB);
 
+interface ApiProduct {
+  id: number;
+  title: string;
+  price: number;
+  image: string;
+}
+
+interface DataProducts {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+}
+
 export default function Home() {
   const { error } = useMigrations(db, migrations);
+  const [products, setProducts] = useState<DataProducts[]>([]);
 
   useDrizzleStudio(expoDB);
 
@@ -27,15 +38,48 @@ export default function Home() {
     );
   }
 
-  return (
-    <ScrollView
-      style={{ flex: 1 }}
-      className="bg-slate-200"
-      showsVerticalScrollIndicator={false}
-    >
-      <View className="w-full px-5" style={{ marginTop: statusBarHeight + 8 }}>
-        <Header />
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("https://fakestoreapi.com/products");
+        const data: ApiProduct[] = await response.json();
+
+        const formattedData = data.map((item) => ({
+          id: item.id,
+          name: item.title,
+          price: item.price,
+          image: item.image,
+        }));
+        setProducts(formattedData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  const renderItem = ({ item }: { item: DataProducts }) => (
+    <View className="p-2 w-1/2">
+      <View className="rounded p-4">
+        <Image
+          source={{ uri: item.image }}
+          className="w-full h-48 rounded-3xl"
+        />
+        <Text className="text-lg font-bold mb-2">{item.name}</Text>
+        <Text className="text-base text-gray-600 ">
+          R$: {item.price.toFixed(2)}
+        </Text>
       </View>
-    </ScrollView>
+    </View>
+  );
+
+  return (
+    <FlatList
+      data={products}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id.toString()}
+      numColumns={2}
+      key={2}
+    />
   );
 }
