@@ -36,7 +36,7 @@ export default function Layout() {
       tokenCache={tokenCache}
     >
       <LinearGradient
-        colors={["#e5c3bf", "#FFFFFF", "#FFFFFF"]}
+        colors={["#e5c3bf", "#dddddd", "#FFFFFF"]}
         style={{ flex: 1 }}
       >
         <ScrollView

@@ -5,6 +5,7 @@ import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import migrations from "../../../drizzle/migrations";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import { useEffect, useState } from "react";
+import Search from "@/components/Search";
 
 const DATABASE_NAME = "database.db";
 const expoDB = openDatabaseSync(DATABASE_NAME);
@@ -74,12 +75,15 @@ export default function Home() {
   );
 
   return (
-    <FlatList
-      data={products}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id.toString()}
-      numColumns={2}
-      key={2}
-    />
+    <View>
+      <Search />
+      <FlatList
+        data={products}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        key={2}
+      />
+    </View>
   );
 }
