@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, ScrollView } from "react-native";
+import { View, Text, FlatList, Image, ScrollView, SafeAreaView } from "react-native";
 import { drizzle } from "drizzle-orm/expo-sqlite";
 import { openDatabaseSync } from "expo-sqlite/next";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
@@ -78,23 +78,22 @@ export default function Home() {
   );
 
   return (
-    <View>
-      <ScrollView>
-        <LinearGradient colors={["#e5c3bf", "#dddddd", "#FFFFFF"]}>
-          <Text className="text-3xl font-medium px-6 py-5">
-            Match Your Style
-          </Text>
-          <Search />
-          <CategoryList />
-          <FlatList
-            data={products}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-            numColumns={2}
-            key={2}
-          />
-        </LinearGradient>
-      </ScrollView>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <LinearGradient colors={["#e5c3bf", "#dddddd", "#FFFFFF"]} style={{ flex: 1 }}>
+        <FlatList
+          ListHeaderComponent={
+            <View className="px-5 py-4">
+              <Text className="text-3xl font-medium px-5 pb-5">Match Your Style</Text>
+              <Search />
+              <CategoryList />
+            </View>
+          }
+          data={products}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+        />
+      </LinearGradient>
+    </SafeAreaView>
   );
 }

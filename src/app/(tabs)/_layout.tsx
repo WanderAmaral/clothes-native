@@ -8,17 +8,19 @@ import "@/app/global.css";
 import { tokenCache } from "../storage/tokencache";
 import { LinearGradient } from "expo-linear-gradient";
 
-
 const PUBLIC_CLERK_PUBLISHABLE_KEY = process.env
   .EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
 
 export default function TabLayout() {
   return (
-    <ClerkProvider
-      publishableKey={PUBLIC_CLERK_PUBLISHABLE_KEY}
-      tokenCache={tokenCache}
+    <LinearGradient
+      colors={["#e5c3bf", "#dddddd", "#FFFFFF"]}
+      style={{ flex: 1 }}
     >
-      
+      <ClerkProvider
+        publishableKey={PUBLIC_CLERK_PUBLISHABLE_KEY}
+        tokenCache={tokenCache}
+      >
         <Header />
         <Tabs
           screenOptions={{
@@ -33,6 +35,7 @@ export default function TabLayout() {
             }}
           />
         </Tabs>
-    </ClerkProvider>
+      </ClerkProvider>
+    </LinearGradient>
   );
 }

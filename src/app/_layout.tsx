@@ -9,7 +9,8 @@ import Header from "@/components/Header";
 import Constants from "expo-constants";
 import { LinearGradient } from "expo-linear-gradient";
 
-const PUBLIC_CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
+const PUBLIC_CLERK_PUBLISHABLE_KEY = process.env
+  .EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
 
 const statusBarHeight = Constants.statusBarHeight;
 
@@ -31,24 +32,16 @@ const statusBarHeight = Constants.statusBarHeight;
 
 export function Layout() {
   return (
-    
-      <LinearGradient
-        colors={["#e5c3bf", "#dddddd", "#FFFFFF"]}
-        style={{ flex: 1 }}
-      >
-        <SafeAreaView style={{ flex: 1 }}>
-          <View
-            className="w-full px-5"
-            style={{ marginTop: statusBarHeight + 8, flex: 1 }}
-          >
-            <Header />
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            </Stack>
-            {/* <InitialLayout /> */}
-          </View>
-        </SafeAreaView>
-      </LinearGradient>
-   
+    <LinearGradient
+      colors={["#e5c3bf", "#dddddd", "#FFFFFF"]}
+      style={{ flex: 1 }}
+    >
+      <View className="w-full px-5">
+        <Stack>
+          <Stack.Screen name="(tabs)" />
+        </Stack>
+        {/* <InitialLayout /> */}
+      </View>
+    </LinearGradient>
   );
 }
