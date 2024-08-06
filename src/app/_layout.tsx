@@ -1,58 +1,54 @@
-import { Slot } from "expo-router";
+import { Slot, Stack } from "expo-router";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
-import { useEffect } from "react";
-import { ActivityIndicator, ScrollView, View } from "react-native";
+import React, { useEffect } from "react";
+import { ActivityIndicator, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { tokenCache } from "./storage/tokencache";
 import "@/app/global.css";
 import Header from "@/components/Header";
 import Constants from "expo-constants";
 import { LinearGradient } from "expo-linear-gradient";
 
-const PUBLIC_CLERK_PUBLISHABLE_KEY = process.env
-  .EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
+const PUBLIC_CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
 
 const statusBarHeight = Constants.statusBarHeight;
 
-function InitialLayout() {
-  const { isSignedIn, isLoaded } = useAuth();
+// function InitialLayout() {
+//   const { isSignedIn, isLoaded } = useAuth();
 
-  useEffect(() => {
-    if (!isLoaded) return;
-  }, [isSignedIn]);
+//   useEffect(() => {
+//     if (!isLoaded) return;
+//   }, [isSignedIn]);
 
-  return isLoaded ? (
-    <Slot />
-  ) : (
-    <ActivityIndicator
-      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-    />
-  );
-}
+//   return isLoaded ? (
+//     <Slot />
+//   ) : (
+//     <ActivityIndicator
+//       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+//     />
+//   );
+// }
 
-export default function Layout() {
+export function Layout() {
   return (
-    <ClerkProvider
-      publishableKey={PUBLIC_CLERK_PUBLISHABLE_KEY}
-      tokenCache={tokenCache}
-    >
+    
       <LinearGradient
         colors={["#e5c3bf", "#dddddd", "#FFFFFF"]}
         style={{ flex: 1 }}
       >
-        <ScrollView
-          style={{ flex: 1 }}
-          className=""
-          showsVerticalScrollIndicator={false}
-        >
+        <SafeAreaView style={{ flex: 1 }}>
           <View
             className="w-full px-5"
-            style={{ marginTop: statusBarHeight + 8 }}
+            style={{ marginTop: statusBarHeight + 8, flex: 1 }}
           >
             <Header />
-            <InitialLayout />
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            </Stack>
+            {/* <InitialLayout /> */}
           </View>
-        </ScrollView>
+        </SafeAreaView>
       </LinearGradient>
-    </ClerkProvider>
+   
   );
 }

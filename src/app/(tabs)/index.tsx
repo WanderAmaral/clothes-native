@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image } from "react-native";
+import { View, Text, FlatList, Image, ScrollView } from "react-native";
 import { drizzle } from "drizzle-orm/expo-sqlite";
 import { openDatabaseSync } from "expo-sqlite/next";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
@@ -6,7 +6,9 @@ import migrations from "../../../drizzle/migrations";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import { useEffect, useState } from "react";
 import Search from "@/components/Search";
-import CategoryList from "./components/category-list";
+import CategoryList from "../components/category-list";
+import Header from "@/components/Header";
+import { LinearGradient } from "expo-linear-gradient";
 
 const DATABASE_NAME = "database.db";
 const expoDB = openDatabaseSync(DATABASE_NAME);
@@ -77,16 +79,22 @@ export default function Home() {
 
   return (
     <View>
-      <Text className="text-3xl font-medium px-6 py-5">Match Your Style</Text>
-      <Search />
-      <CategoryList />
-      <FlatList
-        data={products}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2}
-        key={2}
-      />
+      <ScrollView>
+        <LinearGradient colors={["#e5c3bf", "#dddddd", "#FFFFFF"]}>
+          <Text className="text-3xl font-medium px-6 py-5">
+            Match Your Style
+          </Text>
+          <Search />
+          <CategoryList />
+          <FlatList
+            data={products}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={2}
+            key={2}
+          />
+        </LinearGradient>
+      </ScrollView>
     </View>
   );
 }
