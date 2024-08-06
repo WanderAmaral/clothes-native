@@ -6,6 +6,7 @@ import migrations from "../../../drizzle/migrations";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import { useEffect, useState } from "react";
 import Search from "@/components/Search";
+import CategoryList from "./components/category-list";
 
 const DATABASE_NAME = "database.db";
 const expoDB = openDatabaseSync(DATABASE_NAME);
@@ -60,8 +61,8 @@ export default function Home() {
   }, []);
 
   const renderItem = ({ item }: { item: DataProducts }) => (
-    <View className="p-2 w-1/2">
-      <View className="rounded p-4">
+    <View className="px-2 w-1/2">
+      <View className="rounded px-4">
         <Image
           source={{ uri: item.image }}
           className="w-full h-48 rounded-3xl"
@@ -76,7 +77,9 @@ export default function Home() {
 
   return (
     <View>
+      <Text className="text-3xl font-medium px-6 py-5">Match Your Style</Text>
       <Search />
+      <CategoryList />
       <FlatList
         data={products}
         renderItem={renderItem}
