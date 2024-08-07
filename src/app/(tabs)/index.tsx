@@ -1,4 +1,11 @@
-import { View, Text, FlatList, Image, ScrollView, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
 import { drizzle } from "drizzle-orm/expo-sqlite";
 import { openDatabaseSync } from "expo-sqlite/next";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
@@ -9,6 +16,7 @@ import Search from "@/components/Search";
 import CategoryList from "../components/category-list";
 import Header from "@/components/Header";
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 
 const DATABASE_NAME = "database.db";
 const expoDB = openDatabaseSync(DATABASE_NAME);
@@ -64,11 +72,14 @@ export default function Home() {
 
   const renderItem = ({ item }: { item: DataProducts }) => (
     <View className="px-2 w-1/2">
-      <View className="rounded px-4">
+      <View className="rounded px-4 relative">
         <Image
           source={{ uri: item.image }}
           className="w-full h-48 rounded-3xl"
         />
+        <View className="absolute right-6 top-3 flex items-center rounded-full bg-white p-2">
+          <Ionicons name="heart-outline" size={24} color="#D91F1F" />
+        </View>
         <Text className="text-lg font-bold mb-2">{item.name}</Text>
         <Text className="text-base text-gray-600 ">
           R$: {item.price.toFixed(2)}
@@ -79,11 +90,16 @@ export default function Home() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <LinearGradient colors={["#e5c3bf", "#dddddd", "#FFFFFF"]} style={{ flex: 1 }}>
+      <LinearGradient
+        colors={["#e5c3bf", "#dddddd", "#FFFFFF"]}
+        style={{ flex: 1 }}
+      >
         <FlatList
           ListHeaderComponent={
             <View className="px-5 py-4">
-              <Text className="text-3xl font-medium px-5 pb-5">Match Your Style</Text>
+              <Text className="text-3xl font-medium px-5 pb-5">
+                Match Your Style
+              </Text>
               <Search />
               <CategoryList />
             </View>
