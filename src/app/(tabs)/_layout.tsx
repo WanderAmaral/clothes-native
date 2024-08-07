@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Feather } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import React from "react";
@@ -25,13 +25,62 @@ export default function TabLayout() {
         <Tabs
           screenOptions={{
             headerShown: false,
+            tabBarStyle: {
+              height: 90,
+              alignItems: "center",
+            },
           }}
         >
           <Tabs.Screen
             name="index"
             options={{
-              title: "Home",
-              tabBarIcon: () => <Ionicons name="menu" />,
+              title: "",
+              tabBarIcon: ({ focused }) => (
+                <Ionicons
+                  name={focused ? "home" : "home-outline"}
+                  size={30}
+                  color={focused ? "#E12727" : "#c0c0c0"}
+                />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="menu"
+            options={{
+              title: "",
+              tabBarIcon: ({ focused }) => (
+                <Ionicons
+                  name={focused ? "menu" : "menu-outline"}
+                  size={30}
+                  color={focused ? "#E12727" : "#c0c0c0"}
+                />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="cart"
+            options={{
+              title: "",
+              tabBarIcon: ({ focused }) => (
+                <Ionicons
+                  name="cart"
+                  size={30}
+                  color={focused ? "#E12727" : "#c0c0c0"}
+                />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="user"
+            options={{
+              title: "",
+              tabBarIcon: ({ focused, size }) => (
+                <Feather
+                  name="user"
+                  size={size}
+                  color={focused ? "#E12727" : "#c0c0c0"}
+                />
+              ),
             }}
           />
         </Tabs>
